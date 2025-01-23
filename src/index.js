@@ -4,11 +4,13 @@
 // add task en folder
 // aside, open and close list task from proyect
 // push git hub
+// localhost
 import './styles/index.css';
 
 import header from "./modules/header.js";
 import aside from "./modules/aside.js";
 import main from "./modules/content.js";
+import createCard from "./modules/content-card.js"
 
 import { openModal, closeModal, modalProject, modalTask } from "./modules/modal.js";
 
@@ -71,7 +73,7 @@ class Task {
     }
 
     completeTask(){
-        this.status = true;
+        this.status = !this.status;
     }
     
 }
@@ -84,18 +86,27 @@ projects.push(new Project("Trabajo"));
 projects.push(new Project("Study"));
 
 
-projects[0].addTask(new Task("Hacer compras","texto random","2021-10-10","high"));
-projects[0].addTask(new Task("acariciar gato","texto random","2021-10-10","high"));
-projects[0].addTask(new Task("alavar gato","texto random","2021-10-10","high"));
-projects[0].addTask(new Task("check stock market","ali baba y mercadolibre","2021-10-10","high"));
+projects[0].addTask(new Task("Hacer compras","texto random","2021-10-10","Low"));
+projects[0].addTask(new Task("acariciar gato","texto random","2021-10-10","Normal"));
+projects[0].addTask(new Task("alavar gato","texto random","2021-10-10","High"));
+projects[0].addTask(new Task("check stock market","ali baba y mercadolibre","2021-10-10","Low"));
 
-projects[1].addTask(new Task("buy falopa","no olvidarse","420-10-10","high"));
-projects[1].addTask(new Task("hacer el minimo esfuerzo","al menos que me pagen mas","420-10-10","high"));
 
-projects[2].addTask(new Task("study ia","how work","2012-23-23","low"))
-projects[2].addTask(new Task("The odin project","make to do list","2012-23-23","high"))
-projects[2].addTask(new Task("how cat works","dont undestand","2017-13-27","normal"))
+projects[0].addTask(new Task("Hacer compras","texto random","2021-10-10","Low"));
+projects[0].addTask(new Task("acariciar gato","texto random","2021-10-10","Normal"));
+projects[0].addTask(new Task("alavar gato","texto random","2021-10-10","High"));
+projects[0].addTask(new Task("check stock market","ali baba y mercadolibre","2021-10-10","Low"));
 
+projects[1].addTask(new Task("buy falopa","no olvidarse","420-10-10","High"));
+projects[1].addTask(new Task("hacer el minimo esfuerzo","al menos que me pagen mas","420-10-10","High"));
+
+projects[2].addTask(new Task("study ia","how work","2012-23-23","Low"))
+projects[2].addTask(new Task("The odin project","make to do list","2012-23-23","High"))
+projects[2].addTask(new Task("how cat works","dont undestand","2017-13-27","Normal"))
+
+projects[2].addTask(new Task("study ia","how work","2012-23-23","Low"))
+projects[2].addTask(new Task("The odin project","make to do list","2012-23-23","High"))
+projects[2].addTask(new Task("how cat works","dont undestand","2017-13-27","Normal"))
 
 const displayDOM = (function(){
 
@@ -118,6 +129,15 @@ const displayDOM = (function(){
         //updateAllDOM(projects);
 
     }
+    const updateTaskCompleted = (idTask)=>{
+        
+        projects.forEach(project => {
+            project.tasks.forEach(task => {
+                if(task.id === idTask) return task.completeTask()
+            })
+        })  
+
+    }
 
     const updateHeader = ()=>{
     const headerProjects = document.querySelector(".header-container-projects");
@@ -136,11 +156,20 @@ const displayDOM = (function(){
         const project = projects.find(project => project.id === currentFolder)
         const getColor = project.bgColor;
         document.querySelector(".content").style.backgroundColor = getColor
+        document.querySelector(".container-addTask").style.backgroundColor = getColor
+        
         console.log(getColor)
     }
     
-    const updateMain = ()=>{
+    const updateCards = ()=>{
+        const currentProject = projects.find(project => project.id === currentFolder)
+        const containerCard = document.querySelector(".container-card");
+        containerCard.innerHTML = ""
 
+        currentProject.tasks.forEach(task => {
+            containerCard.appendChild(createCard(task.id,task.title,task.descripcion,task.date,task.priority,task.status))
+
+        })
     }
 
     const updateAsideProject = () => {
@@ -156,6 +185,7 @@ const displayDOM = (function(){
             carpetProjects.appendChild(titleProject)
 
             const taskList = document.createElement("ul");
+
                 project.tasks.forEach(task => {
                     const taskItem = document.createElement("li");
                     taskItem.dataset.id = task.id;
@@ -163,10 +193,10 @@ const displayDOM = (function(){
                     taskItem.classList.add("task-item")
                     taskItem.textContent = task.title;
                     taskList.appendChild(taskItem);
-
                     //btn completed task
                     const btnCompleted = document.createElement("span");
-                    btnCompleted.textContent = "⭕";
+                    task.status === true ? btnCompleted.textContent = "❌":  btnCompleted.textContent = "⭕";
+                    task.status === true ? taskItem.classList.add("checked") : taskItem.classList.remove("checked");
                     btnCompleted.classList.add("btn-completed-task");
                     taskItem.appendChild(btnCompleted);
 
@@ -182,7 +212,7 @@ const displayDOM = (function(){
             taskList.appendChild(addTask)
         })
     }
-    return { updateAsideProject , updateHeader, folderSelect}
+    return { updateAsideProject , updateHeader, folderSelect, updateCards, updateTaskCompleted}
 })()
 
 //⭕
@@ -191,9 +221,18 @@ const displayDOM = (function(){
 displayDOM.updateAsideProject(projects);
 displayDOM.updateHeader();
 displayDOM.folderSelect(currentFolder)
+displayDOM.updateCards();
 document.querySelector(".nav-item").classList.add("active")
 
 
+// const myCard = createCard(projects[0].tasks[0].title,projects[0].tasks[0].descripcion,projects[0].tasks[0].date,projects[0].tasks[0].priority)
+// const myCard1 = createCard(projects[0].tasks[1].title,projects[1].tasks[1].descripcion,projects[1].tasks[1].date,projects[1].tasks[1].priority)
+// const myCard2 = createCard(projects[0].tasks[2].title,projects[2].tasks[2].descripcion,projects[2].tasks[2].date,projects[2].tasks[2].priority)
+// console.log(myCard)
+
+// document.querySelector(".content").appendChild(myCard);
+// document.querySelector(".content").appendChild(myCard1);
+// document.querySelector(".content").appendChild(myCard2);
 
 
 // PROCESAR CREACION DE PROYEC
@@ -204,10 +243,13 @@ document.addEventListener("click",(e)=>{
         modalProject();
     }
     if(e.target.closest(".add-task")){
-
         let id = e.target.closest(".add-task").dataset.id;
         console.log(id)
         modalTask(id)
+    }
+
+    if(e.target.closest(".main-add-task")){
+        modalTask(currentFolder);
     }
     if(e.target.matches(".btn-close-modal")) closeModal()
  
@@ -217,6 +259,23 @@ document.addEventListener("click",(e)=>{
     displayDOM.folderSelect(e.target.dataset.id)
     document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"))
     e.target.classList.add("active")
+    displayDOM.updateCards();
+    }
+
+    if(e.target.closest(".main-checkTask")){
+        const mainTaskId = e.target.closest(".main-checkTask");
+        console.log(mainTaskId)
+        console.log(mainTaskId.dataset.id)
+        displayDOM.updateTaskCompleted(mainTaskId.dataset.id)
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject()
+    }
+
+    if(e.target.closest(".task-item")){
+        
+        displayDOM.updateTaskCompleted(e.target.closest(".task-item").dataset.id)
+        displayDOM.updateAsideProject()
+        displayDOM.updateCards();
     }
 
 })
@@ -233,6 +292,8 @@ document.addEventListener("submit",(e)=>{
         closeModal();
         displayDOM.updateHeader();
 
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject()
     }
 
     if(e.target.matches("#form-task")){
@@ -253,9 +314,12 @@ document.addEventListener("submit",(e)=>{
         console.log(actuallyProject);
 
         //processFormTask()
+        
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject()
         closeModal();
-
     }
 
     e.preventDefault();
 })
+

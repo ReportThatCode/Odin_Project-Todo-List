@@ -2,23 +2,42 @@
     grid-column: 2/3;
     grid-row: 2/3;
     padding: 20px;
+    padding-top: 0;
     background-color: #FE9B74;
     box-shadow: -9px -9px 17px -5px rgba(0,0,0,0.12), inset -11px -13px 17px -5px rgba(0,0,0,0.1);;
-    
+    border-radius: 0 4px 4px 4px;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    position: relative;
 }
+.content::-webkit-scrollbar {
+    display: none; /* Oculta las barras en Chrome, Safari y Opera */
+  }
 
+.content .container-addTask {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 20px 0px 10px 0;
+    z-index: 200;
+}
 .card {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 20px;
     padding: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     border-radius: 12px;
-    width: 250px;
+    max-width: 300px;
+    width: 90%;
     background-color: #f3f3f3;
     box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .card div:first-child {
@@ -33,6 +52,9 @@
 .card div:first-child h2 {
     font-size: 1rem;
     font-family: "DynaPuff", serif;
+    max-width: 150px;
+    text-wrap: wrap;
+    overflow: hidden;
 }
 
 .card div:first-child div {
@@ -44,6 +66,7 @@
     width: 25px;
     background-color: black;
     cursor: pointer;
+    flex-shrink: 0;
 }
 .card div:first-child img {
     width: 60%;
@@ -52,14 +75,14 @@
 }
 
 
-
 .card p {
-    font-size: 0.9rem;
-    font-family: "Unkempt", serif;
-    font-weight: bold;
+    font-size: 0.7rem;
+    font-family: "DynaPuff", serif;
+    color: rgb(54, 54, 54);
+    max-width: 150px;
+    text-wrap: wrap;
+    overflow: hidden;
 }
-
-
 
 
 .card > div:last-child {
@@ -68,6 +91,8 @@
     align-items: center;
     width: 100%;
     padding-top: 40px;
+    position: relative;
+    left: 5px;
 } 
 .card > div:last-child p {
     font-size: .8rem;
@@ -86,4 +111,41 @@
 
 .nav-item {
     z-index: 20;
+}
+
+
+.container-card {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+    row-gap: 20px;
+}
+
+.main-add-task {
+    background-color: red;
+    display: flex;
+    margin: 10px 20px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: white;
+    width: 120px;
+    cursor: pointer;
+    font-family: "DynaPuff", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+.main-add-task:hover {
+    box-shadow: 0px 0px 10px rgba(54, 54, 54, 0.1);
+    background-color: rgb(240, 240, 240);
+}
+.main-add-task p {
+    font-size: 0.9rem;
+}
+
+.main-add-task span {
+    font-size: 1.3rem;
+    padding-left: 0.5rem;
 }
