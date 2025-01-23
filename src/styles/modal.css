@@ -1,0 +1,117 @@
+.modal {
+    padding: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    border-radius: 12px;
+    min-width: 300px;
+}
+
+.modal h2 {
+    font-size: 1.4rem;
+    font-family: "DynaPuff", serif;
+    padding-bottom: 20px;
+}
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* FORM PROJECT*/
+
+.modal form .input-project {
+    font-size: 1.2rem;
+    padding: 5px;
+    border: solid 2px black;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.btn-submit-project {
+    border: solid 2px black;
+    padding: 0.6rem;
+    border-radius: 4px;
+    font-family: "DynaPuff", serif;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+.modal .btn-close-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-bottom: 2px;
+    border-radius: 50px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+
+
+
+/* FORM TASK*/
+
+
+.modal form label {
+    font-family: "DynaPuff", serif;
+}
+
+#title-task {
+    margin: 5px 0 10px 0;
+    font-size: 1rem;
+    padding: 5px;   
+    border: solid black 2px;
+    border-radius: 4px;
+}
+
+#descripcion-task {
+    resize: none;
+    margin: 5px 0 10px 0;
+    font-size: 1rem;
+    padding: 5px;   
+    border: solid black 2px;
+    border-radius: 4px;
+}
+
+form > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+form > div div {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div div label {
+    margin-bottom: 5px;
+}
+
+form > div div input, form > div div select  {
+    padding: 5px;
+    border: solid 2px black;
+    border-radius: 4px;
+}
+
+#btn-submit-task {
+    margin-top: 20px;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    font-family: "DynaPuff", serif;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}

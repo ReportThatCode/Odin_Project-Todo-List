@@ -1,0 +1,39 @@
+
+header {
+    display: flex;
+    overflow: hidden;
+}
+
+nav {
+    display: flex;
+    align-items: flex-end;
+}
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
+nav ul .nav-item {
+    font-family: "DynaPuff", serif;
+    font-size: 0.8rem;
+    padding: 0.8rem 3rem;
+    border-radius:5px 5px 0 0;
+    cursor: pointer;
+    margin-left: 5px;
+    transform: translateY(8px);
+    transition: all 0.1s ease-in;
+    background-color: white;
+    z-index: 1;
+    clip-path: polygon(0% 0%, 90% 0, 100% 40%, 100% 100%, 0% 100%);
+    
+}
+nav ul .nav-item:first-child {
+    margin-left: 0;
+}
+
+nav ul .nav-item.active {
+    transform: translateY(0px);
+    z-index: 100;
+    background-color: red;
+    box-shadow: 4px -1px 10px rgba(0,0,0,0.2);
+}
