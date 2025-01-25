@@ -36,8 +36,12 @@ containerCards.classList.add("container-card");
 main.appendChild(containerCards)
 
 
+function setBgFolder(color){
+    const root = document.documentElement;
+    // Cambia el valor de la variable CSS
+    root.style.setProperty('--bgFolder', color);
+}
 
 
-
-export default main;
+export {main, setBgFolder};
 

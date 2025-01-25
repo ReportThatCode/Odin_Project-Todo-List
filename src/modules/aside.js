@@ -1,6 +1,13 @@
 import "../styles/aside.css";
+import configImg from "../imgs/config.svg"
 
 const aside = document.createElement("aside");
+
+
+const asideHeader = document.createElement("div");
+
+const projectAndConfig = document.createElement("div")
+projectAndConfig.classList.add("aside-container-btn")
 
 // proyect title
 const title = document.createElement("h1");
@@ -18,6 +25,22 @@ addProjectSpan.textContent = "+";
 containerAddProject.appendChild(addProjectTitle);
 containerAddProject.appendChild(addProjectSpan);
 
+// config
+const configOptions = document.createElement("div");
+configOptions.classList.add("config-options")
+const configOptionsImg = document.createElement("img");
+configOptionsImg.src = configImg
+
+configOptions.appendChild(configOptionsImg);
+// appens
+
+
+projectAndConfig.appendChild(containerAddProject)
+projectAndConfig.appendChild(configOptions)
+
+asideHeader.appendChild(title)
+asideHeader.appendChild(projectAndConfig)
+
 // lista de proyect rutina / hacer compras (que sea lista despegable)
 const containerProject = document.createElement("ul");
 containerProject.classList.add("aside_project");
@@ -27,8 +50,7 @@ containerProject.classList.add("aside_project");
 
 // APPENDCHILD
 
-aside.appendChild(title);
-aside.appendChild(containerAddProject);
+aside.appendChild(asideHeader)
 aside.appendChild(containerProject);
 
 

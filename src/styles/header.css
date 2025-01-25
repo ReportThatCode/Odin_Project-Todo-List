@@ -29,14 +29,14 @@ nav ul .nav-item {
 }
 
 nav ul .nav-item:hover {
-    transform: translateY(0px);
+    transform: translateY(1px);
 }
 nav ul .nav-item:first-child {
     margin-left: 0;
 }
 
 nav ul .nav-item.active {
-    transform: translateY(0px);
+    transform: translateY(1px);
     z-index: 100;
     background-color: red;
     box-shadow: 4px -1px 10px rgba(0,0,0,0.2);
