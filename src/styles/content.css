@@ -43,10 +43,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 4px;
+    border-radius: 2px;
     max-width: 300px;
     width: 100%;
-    height: 250px;
+    height: 200px;
     background-color: yellow;
     position: relative; /* Necesario para posicionar los pseudo-elementos */
     z-index: 0; /* El pseudo-elemento se apila sobre este */
@@ -95,17 +95,21 @@
 .header-card {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
+    padding-top: 10px;
 }
 .header-card .tacks {
     width: 50px;
-    height: 50px;
+    height: 30px;
+    position: relative;
+    top: -5px;
+    left: -10px;
 }
 .header-card .tacks img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.8);
+    transform: scale(1.4);
 }
 
 .header-card .edit-card {
@@ -129,7 +133,7 @@
 }
 
 .body-card h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 5px 0 8px;
 }
 
@@ -167,19 +171,6 @@
     font-size: 0.85rem;
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .nav-item {
     z-index: 20;
 }
@@ -188,7 +179,7 @@
 .container-card {
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 280px);
+    grid-template-columns: repeat(auto-fit, 200px);
     gap: 20px;
 }
 

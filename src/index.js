@@ -1,29 +1,31 @@
 
 // queda por hacer
 
-// choise color project
-// delete proyect 
-// add task en folder  => DONE
-// aside, open and close list task from proyect
+// choise color project                         => process
+// add task en folder                           => DONE
+// delete proyect tools nav                     => process
+// aside, open and close list task from proyect => DONE
 // push git hub
-// localhost
+// localhost                                    => DONE
 // orden priority
-// edit task modal
+// edit task modal                              => DONE
 
+import configImg from "./imgs/config.svg"
+import menuDown from "./imgs/menu-down.svg"
 import './styles/index.css';
-
 import header from "./modules/header.js";
 import aside from "./modules/aside.js";
 import {main,setBgFolder} from "./modules/content.js";
 import createCard from "./modules/content-card.js"
-
-import { openModal, closeModal, modalProject, modalTask } from "./modules/modal.js";
+import { modalEditTask, openModal, closeModal, modalProject, modalTask } from "./modules/modal.js";
+import {data, updateData} from "./modules/data.js"
 
 const root = document.querySelector("#Root");
 
 root.appendChild(main);
 root.appendChild(header);
 root.appendChild(aside);
+
 
 function obtenerColorPastel() {
     const coloresPastel = [
@@ -50,18 +52,21 @@ function generateUniqueId() {
 }
 
 
+
+
+let projects = data
+
+
 class Project {
     constructor(title){
         this.bgColor = obtenerColorPastel();
         this.id = generateUniqueId();
         this.title = title;
         this.tasks = [];
-    }
-
+    }   
     addTask(task){
         this.tasks.push(task)
     }
- 
     showTasks(){
         return this.tasks
     }
@@ -79,38 +84,39 @@ class Task {
 
     completeTask(){
         this.status = !this.status;
-    }
-    
+    } 
 }
 
 
-let projects =  JSON.parse(localStorage.getItem("folders")) || [];
+const updateLocalStorage = ()=>{
+    localStorage.setItem("folders",JSON.stringify(projects))
 
-projects[0] = new Project("Rutina")
+    const parseData = JSON.parse(localStorage.getItem("folders"));  
+
+    parseData.forEach(project => {
+        Object.setPrototypeOf(project,Project.prototype)
+        project.tasks.forEach(task => {
+            Object.setPrototypeOf(task,Task.prototype)
+        })
+    })
+    projects = parseData
+}
+console.log(projects)
+console.log(JSON.parse(localStorage.getItem("folders")))
+
+if(!JSON.parse(localStorage.getItem("folders"))){
+    console.log("aplicando cosas de null")
+    projects[0] = new Project("Rutina")
+    projects[0].bgColor = "rgb(186, 225, 255)";
+    projects[0].addTask(new Task("Hacer compras","texto random","2021-10-10","Low"));
+    projects[0].addTask(new Task("acariciar gato","texto random","2021-10-10","Normal"));
+    projects[0].addTask(new Task("alavar gato","texto random","2021-10-10","High"));    
+}
+
+
 let currentFolder = projects[0].id;
 
-console.log("main project");
-console.log(projects[0])
-projects[0].bgColor = "rgb(186, 225, 255)";
 
-//projects.push(new Project("Trabajo"));
-//projects.push(new Project("Study"));
-
-
-projects[0].addTask(new Task("Hacer compras","texto random","2021-10-10","Low"));
-projects[0].addTask(new Task("acariciar gato","texto random","2021-10-10","Normal"));
-projects[0].addTask(new Task("alavar gato","texto random","2021-10-10","High"));
-// projects[0].addTask(new Task("check stock market","ali baba y mercadolibre","2021-10-10","Low"));
-
-
-// projects[1].addTask(new Task("buy falopa","no olvidarse","420-10-10","High"));
-// projects[1].addTask(new Task("hacer el minimo esfuerzo","al menos que me pagen mas","420-10-10","High"));
-
-// projects[1].addTask(new Task("study ia","how work","2012-23-23","Low"))
-//  projects[1].addTask(new Task("The odin project","make to do list","2012-23-23","High"))
-// projects[2].addTask(new Task("how cat works","dont undestand","2017-13-27","Normal"))
-
- 
 const displayDOM = (function(){
 
     // actualizar doom al agregar projecto / actualizar content tmb
@@ -125,7 +131,7 @@ const displayDOM = (function(){
         addTaskEl.appendChild(addTaskTitle)
         addTaskEl.appendChild(AddTaskSpan);
         return addTaskEl
-        }
+    }
 
     const updateTaskCompleted = (idTask)=>{
         
@@ -150,6 +156,7 @@ const displayDOM = (function(){
     })
 
     }
+
     const folderSelect = (targetID)=>{
         currentFolder = targetID
         const project = projects.find(project => project.id === currentFolder)
@@ -177,13 +184,61 @@ const displayDOM = (function(){
 
             const containerProject = document.createElement("li");
 
+            const $contentProject = document.createElement("div");
+            $contentProject.classList.add("content-project")
+
+            const $colorProject = document.createElement("div");
+            $colorProject.classList.add("color-project");
+
+            // const $imgConfig= document.createElement("img")
+            // $imgConfig.classList.add("config-project")
+            // $imgConfig.src = configImg
+ 
+    
+
+            // const navConfig = document.createElement("ul");
+            // navConfig.classList.add("nav-config");
+            // const clearTask = document.createElement("li");
+            // clearTask.textContent = "Clear tasks"
+            // const deleteProject = document.createElement("li");
+            // deleteProject.textContent = "Delete project";
+            // const deleteTask = document.createElement("li");
+            // deleteTask.textContent = "Delete Task >"
+            // // nav delete task
+            // const navTasksDelete = document.createElement("ul");
+            // project.tasks.forEach(task => {
+            //     const taskForDelete = document.createElement("li");
+            //     taskForDelete.textContent = task.title;
+            //     taskForDelete.dataset.id = task.id
+            //     navTasksDelete.appendChild(taskForDelete);
+            // })
+
+
+            // navConfig.appendChild(clearTask)
+            // navConfig.appendChild(deleteProject)
+            // deleteTask.appendChild(navTasksDelete)
+            // navConfig.appendChild(deleteTask)
+
+            // containerConfigProject.appendChild(navConfig)
+
+
+            const $folderDown = document.createElement("div");
+            $folderDown.classList.add("folder-down")
             const titleProject = document.createElement("h3");
             titleProject.classList.add("title-proyect")
-            titleProject.textContent = project.title;
-            carpetProjects.appendChild(titleProject)
+            titleProject.textContent = project.title;            
+            $folderDown.appendChild(titleProject)
 
+            const imgDrop = document.createElement("img");
+            imgDrop.src = menuDown;
+
+            $contentProject.appendChild($colorProject)
+            $contentProject.appendChild($folderDown)
+            $contentProject.appendChild(imgDrop)
+
+            containerProject.appendChild($contentProject)
             const taskList = document.createElement("ul");
-
+            taskList.classList.add("container-tasks")
                 project.tasks.forEach(task => {
                     const taskItem = document.createElement("li");
                     taskItem.dataset.id = task.id;
@@ -213,27 +268,23 @@ const displayDOM = (function(){
     return { updateAsideProject , updateHeader, folderSelect, updateCards, updateTaskCompleted}
 })()
 
-
+updateLocalStorage();
 displayDOM.updateAsideProject(projects);
 displayDOM.updateHeader();
 displayDOM.folderSelect(currentFolder)
 displayDOM.updateCards();
 document.querySelector(".nav-item").classList.add("active")
 
-const updateLocalStorage = ()=>{
-    localStorage.setItem("folders",JSON.stringify(projects))
-    const parseData = JSON.parse(localStorage.getItem("folders"));
-    parseData.forEach(project => {
-        Object.setPrototypeOf(project,Project.prototype)
-        project.tasks.forEach(task => {
-            Object.setPrototypeOf(task,Task.prototype)
-        })
-    })
-    projects = parseData
-}
-
 document.addEventListener("click",(e)=>{
- 
+
+    if(e.target.matches(".config-project")){
+        alert("EDIT OR DELETE")
+    }
+
+    if(e.target.closest(".folder-down")){
+        e.target.closest(".content-project").classList.toggle("active");
+    }
+
     if(e.target.closest(".aside_add-project")){       
         modalProject();
     }
@@ -260,12 +311,23 @@ document.addEventListener("click",(e)=>{
         displayDOM.updateTaskCompleted(mainTaskId.dataset.id)
         displayDOM.updateCards();
         displayDOM.updateAsideProject()
+        updateLocalStorage();
     }
 
     if(e.target.closest(".task-item")){
         displayDOM.updateTaskCompleted(e.target.closest(".task-item").dataset.id)
         displayDOM.updateAsideProject()
         displayDOM.updateCards();
+        updateLocalStorage();
+    }
+
+    if(e.target.closest(".edit-card")){
+        const getIdTask = e.target.closest(".edit-card").dataset.id;
+        const folderCurrent = projects.find(folder => folder.id === currentFolder)
+        const getTask = folderCurrent.tasks.find(task=> task.id === getIdTask );
+       // console.log(getTask)
+        modalEditTask(getTask)
+
     }
 
 })
@@ -281,7 +343,6 @@ document.addEventListener("submit",(e)=>{
         closeModal();
         displayDOM.updateHeader();
         displayDOM.updateCards();
-        
         // LOCAL STORAGE
         updateLocalStorage();
     }
@@ -294,29 +355,43 @@ document.addEventListener("submit",(e)=>{
         const getTaskPriority = document.getElementById("priority-task").value
         const getIdProject = document.querySelector("#btn-submit-task").dataset.id;
         const actuallyProject = projects.find(project => project.id === getIdProject);
-        console.log("<-- actual proyecto -->")
-        console.log(actuallyProject)
-        actuallyProject.addTask(new Task(getTasktitle,getTaskDescripcion,getTaskDate,getTaskPriority,false))
-        displayDOM.updateAsideProject(projects)
 
-        //processFormTask()
+        actuallyProject.addTask(
+            new Task(
+            getTasktitle,
+            getTaskDescripcion,
+            getTaskDate,
+            getTaskPriority,
+            false
+            ))
 
-        // local storage
-        // localStorage.setItem("folders",JSON.stringify(projects))
-        // const parseData = JSON.parse(localStorage.getItem("folders"));
-        // parseData.forEach(project => {
-        //     Object.setPrototypeOf(project,Project.prototype)
-        //     project.tasks.forEach(task => {
-        //         Object.setPrototypeOf(task,Task.prototype)
-        //     })
-        // })
-        
-        // projects = parseData
-
-
-        
+        updateLocalStorage();
+        displayDOM.updateAsideProject()
         displayDOM.updateCards();
         displayDOM.updateAsideProject()
+        closeModal();
+    }
+
+    if(e.target.matches("#form-task-edit")){
+        const idEdit = document.querySelector("#btn-submit-task").dataset.id;
+        
+        const getTasktitle = document.getElementById("title-task").value
+        const getTaskDescripcion = document.getElementById("descripcion-task").value
+        const getTaskDate = document.getElementById("date-task").value
+        const getTaskPriority = document.getElementById("priority-task").value
+
+        const folderCurrent = projects.find(folder => folder.id === currentFolder)
+        const getTask = folderCurrent.tasks.find(task=> task.id === idEdit );
+        getTask.title = getTasktitle
+        getTask.descripcion = getTaskDescripcion
+        getTask.date = getTaskDate
+        getTask.priority = getTaskPriority
+        console.log(idEdit)
+        console.log("editando takskk")
+        displayDOM.updateAsideProject()
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject()
+        updateLocalStorage();
         closeModal();
     }
 })
