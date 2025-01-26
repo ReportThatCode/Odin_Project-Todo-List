@@ -188,8 +188,8 @@ aside h1 {
 
 .content-project .color-project {
     background-color: blue;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
 }
 .content-project img {
@@ -259,6 +259,20 @@ aside h1 {
     }
     .list-folder-task {
         position: relative;
+        display: flex;
+        align-items: center;
+        height: 30px;
+    }
+
+    .list-folder-task p {
+        text-wrap: nowrap;
+    }
+
+    .list-folder-task img {
+       width: 20px;
+       height: 20px;
+       transform: rotate(270deg) scale(1.1);
+        
     }
 
     .list-folder-task:hover ul {

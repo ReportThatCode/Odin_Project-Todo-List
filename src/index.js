@@ -1,20 +1,20 @@
 
 // queda por hacer
 
-// choise color project                         => process
+
 // add task en folder                           => DONE
-// delete proyect tools nav                     => process
+// delete proyect tools nav                     => DONE
 // aside, open and close list task from proyect => DONE
 // push git hub
 // localhost                                    => DONE
-// orden priority
+// orden priority                               => important!
 // edit task modal                              => DONE
 
 import configImg from "./imgs/config.svg"
 import menuDown from "./imgs/menu-down.svg"
 import './styles/index.css';
 import header from "./modules/header.js";
-import aside from "./modules/aside.js";
+import {aside,navConfig} from "./modules/aside.js";
 import {main,setBgFolder} from "./modules/content.js";
 import createCard from "./modules/content-card.js"
 import { modalEditTask, openModal, closeModal, modalProject, modalTask } from "./modules/modal.js";
@@ -51,9 +51,6 @@ function generateUniqueId() {
     return `id_${timestamp}_${randomNumber}`; // Combina el timestamp y el número aleatorio
 }
 
-
-
-
 let projects = data
 
 
@@ -69,6 +66,12 @@ class Project {
     }
     showTasks(){
         return this.tasks
+    }
+    deleteTask(id){
+        this.tasks = this.tasks.filter(task => task.id !== id)
+    }
+    getColor(){
+        return this.bgColor
     }
 }
 
@@ -101,6 +104,7 @@ const updateLocalStorage = ()=>{
     })
     projects = parseData
 }
+
 console.log(projects)
 console.log(JSON.parse(localStorage.getItem("folders")))
 
@@ -117,8 +121,9 @@ if(!JSON.parse(localStorage.getItem("folders"))){
 let currentFolder = projects[0].id;
 
 
-const displayDOM = (function(){
 
+
+const displayDOM = (function(){
     // actualizar doom al agregar projecto / actualizar content tmb
     const addTaskElement = ()=>{
         const addTaskEl = document.createElement("div");
@@ -189,38 +194,7 @@ const displayDOM = (function(){
 
             const $colorProject = document.createElement("div");
             $colorProject.classList.add("color-project");
-
-            // const $imgConfig= document.createElement("img")
-            // $imgConfig.classList.add("config-project")
-            // $imgConfig.src = configImg
- 
-    
-
-            // const navConfig = document.createElement("ul");
-            // navConfig.classList.add("nav-config");
-            // const clearTask = document.createElement("li");
-            // clearTask.textContent = "Clear tasks"
-            // const deleteProject = document.createElement("li");
-            // deleteProject.textContent = "Delete project";
-            // const deleteTask = document.createElement("li");
-            // deleteTask.textContent = "Delete Task >"
-            // // nav delete task
-            // const navTasksDelete = document.createElement("ul");
-            // project.tasks.forEach(task => {
-            //     const taskForDelete = document.createElement("li");
-            //     taskForDelete.textContent = task.title;
-            //     taskForDelete.dataset.id = task.id
-            //     navTasksDelete.appendChild(taskForDelete);
-            // })
-
-
-            // navConfig.appendChild(clearTask)
-            // navConfig.appendChild(deleteProject)
-            // deleteTask.appendChild(navTasksDelete)
-            // navConfig.appendChild(deleteTask)
-
-            // containerConfigProject.appendChild(navConfig)
-
+            $colorProject.style.backgroundColor = project.getColor();
 
             const $folderDown = document.createElement("div");
             $folderDown.classList.add("folder-down")
@@ -268,6 +242,32 @@ const displayDOM = (function(){
     return { updateAsideProject , updateHeader, folderSelect, updateCards, updateTaskCompleted}
 })()
 
+
+const  logicaToDo = function(){
+
+    const deleteTask = (idTask,idFolder)=>{
+        
+        const getFolder = projects.find(folder => folder.id === idFolder)
+        getFolder.deleteTask(idTask)
+        updateData();
+        updateLocalStorage();
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject();
+        navConfig(projects)
+    }
+
+    const deleteFolder = (id)=>{
+        projects = projects.filter(folder => folder.id !== id)
+        updateData();
+        updateLocalStorage();
+        displayDOM.updateCards();
+        displayDOM.updateAsideProject();
+        navConfig(projects)
+    }
+
+    return {deleteTask, deleteFolder}
+}()
+
 updateLocalStorage();
 displayDOM.updateAsideProject(projects);
 displayDOM.updateHeader();
@@ -277,9 +277,18 @@ document.querySelector(".nav-item").classList.add("active")
 
 document.addEventListener("click",(e)=>{
 
-    if(e.target.matches(".config-project")){
-        alert("EDIT OR DELETE")
+
+    if(e.target.matches(".delete-task")){
+        console.log(e.target.dataset.id)
+        console.log(e.target.dataset.folderid)
+        logicaToDo.deleteTask(e.target.dataset.id,e.target.dataset.folderid)
+        e.target.remove();
     }
+    if(e.target.matches(".delete-folder")){
+        logicaToDo.deleteFolder(e.target.dataset.id)
+        e.target.remove();
+    }
+
 
     if(e.target.closest(".folder-down")){
         e.target.closest(".content-project").classList.toggle("active");
@@ -369,6 +378,7 @@ document.addEventListener("submit",(e)=>{
         displayDOM.updateAsideProject()
         displayDOM.updateCards();
         displayDOM.updateAsideProject()
+        navConfig(projects)
         closeModal();
     }
 
@@ -392,6 +402,7 @@ document.addEventListener("submit",(e)=>{
         displayDOM.updateCards();
         displayDOM.updateAsideProject()
         updateLocalStorage();
+        navConfig(projects)
         closeModal();
     }
 })

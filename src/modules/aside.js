@@ -1,9 +1,83 @@
 import "../styles/aside.css";
 import configImg from "../imgs/config.svg"
 import {data,updateData} from "./data.js"
+import menuDown from "../imgs/menu-down.svg"
 
-console.log("data-from-aside")
-console.log(data)
+
+
+
+
+function navConfig(data){
+
+    if(document.querySelector(".config-options") !== null) document.querySelector(".config-options").innerHTML = ""
+
+    const configOptionsImg = document.createElement("img");
+    configOptionsImg.src = configImg
+
+    const folderAndTask = data
+
+    const navConfig = document.createElement("ul");
+    navConfig.classList.add("nav-config");
+
+    //RESET
+
+    
+    const clearTask = document.createElement("li");
+    clearTask.classList.add("clear-tasks")
+    clearTask.textContent = "Clear tasks"
+    
+    const deleteFolderTask = document.createElement("li");
+    deleteFolderTask.classList.add("list-folder-task")
+    const deleteText = document.createElement("p");
+    deleteText.textContent = "Delete Folder/Task"
+
+    const deleteNavDrowimg = document.createElement("img");
+    deleteNavDrowimg.src = menuDown
+
+    deleteFolderTask.appendChild(deleteText);
+    deleteFolderTask.appendChild(deleteNavDrowimg);
+    
+    const containerFolderTask = document.createElement("ul");
+
+    folderAndTask.forEach(folder => {
+        const $list = document.createElement("li");
+        $list.classList.add("folder-delete")
+        
+        const $folder = document.createElement("h4")
+        $folder.classList.add("delete-folder")
+        $folder.textContent = folder.title
+        $folder.dataset.id = folder.id
+
+        const ul = document.createElement("ul")
+        
+
+        folder.tasks.forEach(task => {
+            const $task = document.createElement("li")
+            $task.classList.add("delete-task");
+            $task.textContent = task.title
+            $task.dataset.id = task.id
+            $task.dataset.folderid = folder.id
+            ul.appendChild($task)
+        })
+
+        $list.appendChild($folder)
+        $list.appendChild(ul)
+
+        containerFolderTask.appendChild($list)
+    });
+
+    deleteFolderTask.appendChild(containerFolderTask)
+
+    navConfig.appendChild(clearTask)
+    navConfig.appendChild(deleteFolderTask)
+
+
+    
+    configOptions.appendChild(configOptionsImg);
+    configOptions.appendChild(navConfig)
+}
+
+
 const aside = document.createElement("aside");
 
 const asideHeader = document.createElement("div");
@@ -30,59 +104,10 @@ containerAddProject.appendChild(addProjectSpan);
 // config
 const configOptions = document.createElement("div");
 configOptions.classList.add("config-options")
-const configOptionsImg = document.createElement("img");
-configOptionsImg.src = configImg
 
 
+navConfig(data);
 
-            const navConfig = document.createElement("ul");
-            navConfig.classList.add("nav-config");
-            
-            const clearTask = document.createElement("li");
-            clearTask.classList.add("clear-tasks")
-            clearTask.textContent = "Clear tasks"
-            
-            const deleteFolderTask = document.createElement("li");
-            deleteFolderTask.classList.add("list-folder-task")
-            
-            deleteFolderTask.textContent = "Delete Folder/Task"
-            const containerFolderTask = document.createElement("ul");
-
-            data.forEach(folder => {
-                const $list = document.createElement("li");
-                $list.classList.add("folder-delete")
-                
-                const $folder = document.createElement("h4")
-                $folder.classList.add("delete-folder")
-                $folder.textContent = folder.title
-                $folder.dataset.id = folder.id
-
-                const ul = document.createElement("ul")
-                
-
-                folder.tasks.forEach(task => {
-                    const $task = document.createElement("li")
-                    $task.classList.add("delete-task");
-                    $task.textContent = task.title
-                    $task.dataset.id = task.id
-                    ul.appendChild($task)
-                })
-
-                $list.appendChild($folder)
-                $list.appendChild(ul)
-
-                containerFolderTask.appendChild($list)
-            });
-
-            deleteFolderTask.appendChild(containerFolderTask)
-
-            navConfig.appendChild(clearTask)
-            navConfig.appendChild(deleteFolderTask)
-
-
-            
-            configOptions.appendChild(configOptionsImg);
-            configOptions.appendChild(navConfig)
 
 // appens
 projectAndConfig.appendChild(containerAddProject)
@@ -101,4 +126,4 @@ aside.appendChild(asideHeader)
 aside.appendChild(containerProject);
 
 
-export default aside;
+export {aside, navConfig};
