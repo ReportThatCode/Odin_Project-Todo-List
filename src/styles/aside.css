@@ -100,9 +100,9 @@ aside h1 {
     overflow: auto;
 }
 
-.aside_project::-webkit-scrollbar {
-    display: none; /* Oculta las barras en Chrome, Safari y Opera */
-  }
+    .aside_project::-webkit-scrollbar {
+        display: none; /* Oculta las barras en Chrome, Safari y Opera */
+    }
 
 .aside_project li {
     font-family: "DynaPuff", serif;

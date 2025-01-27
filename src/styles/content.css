@@ -7,8 +7,6 @@
     grid-row: 2/3;
     padding: 20px;
     padding-top: 0;
-    background-color: #FE9B74;
-    box-shadow: -9px -9px 17px -5px rgba(0,0,0,0.12), inset -11px -13px 17px -5px rgba(0,0,0,0.1);;
     border-radius: 0 4px 4px 4px;
     z-index: 10;
     display: flex;
@@ -32,6 +30,7 @@
     z-index: 200;
 }
 
+/*STYLES CARD - NOTE*/
 .card.card-checked {
     background-color: rgb(238, 211, 62);
 }
@@ -53,6 +52,7 @@
     border: solid 2px black;
     padding: 15px;
     padding-top: 5px;
+    padding-bottom: 8px;
 }
 
 .card::before {
@@ -63,7 +63,7 @@
     width: 20px;
     height: 20px;
     border: solid 2px rgb(0, 0, 0);
-    z-index: 1; /* Se coloca debajo del pseudo-elemento ::after */
+    z-index: 1;
 }
 
 .card::after {
@@ -76,8 +76,8 @@
     border-left: solid 2px rgb(0, 0, 0);
     transform: rotate(46deg);
     background-color: var(--bgFolder);
-    z-index: 900; /* Tiene un z-index más alto que la card */
-    pointer-events: none; /* Evita interferencias de eventos del mouse */
+    z-index: 10; 
+    pointer-events: none; 
 }           
 
 .card-left {
@@ -130,7 +130,13 @@
     font-family: "DynaPuff", serif;
     flex: 1;
     flex-direction: column;
+    overflow: auto;
+    scrollbar-width: none;
 }
+
+.body-card::-webkit-scrollbar {
+    display: none; 
+  }
 
 .body-card h2 {
     font-size: 1rem;

@@ -1,10 +1,7 @@
 import "../styles/aside.css";
 import configImg from "../imgs/config.svg"
-import {data,updateData} from "./data.js"
+import {data} from "./data.js"
 import menuDown from "../imgs/menu-down.svg"
-
-
-
 
 
 function navConfig(data){
@@ -24,7 +21,7 @@ function navConfig(data){
     
     const clearTask = document.createElement("li");
     clearTask.classList.add("clear-tasks")
-    clearTask.textContent = "Clear tasks"
+    clearTask.textContent = "Clear complete tasks"
     
     const deleteFolderTask = document.createElement("li");
     deleteFolderTask.classList.add("list-folder-task")
@@ -87,7 +84,7 @@ projectAndConfig.classList.add("aside-container-btn")
 
 // proyect title
 const title = document.createElement("h1");
-title.textContent = "Proyectos";
+title.textContent = "Projects";
 title.classList.add("aside_title");
 
 // add project
@@ -105,9 +102,7 @@ containerAddProject.appendChild(addProjectSpan);
 const configOptions = document.createElement("div");
 configOptions.classList.add("config-options")
 
-
 navConfig(data);
-
 
 // appens
 projectAndConfig.appendChild(containerAddProject)

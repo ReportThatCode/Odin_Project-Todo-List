@@ -1,12 +1,9 @@
 import pen from "../imgs/pencil.svg";
-//import checkBlank  from "../imgs/checkbox-blank.svg";
 import checked  from "../imgs/check.svg";
-
 //pinchos priority
 import red from "../imgs/pinchoRed.png"
 import yellow from "../imgs/pinchoYellow.png"
 import green from "../imgs/pinchoGreen.png"
-
 
 const componentsCard = function (){
     const tacks = ()=>{
@@ -48,7 +45,6 @@ const componentsCard = function (){
     }
 
     // footer
-
     const date = (date)=>{
         const cardDate = document.createElement("p");
         cardDate.textContent = date

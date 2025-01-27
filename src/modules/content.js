@@ -1,10 +1,7 @@
 import "../styles/content.css";
 
-
-
 const main = document.createElement("main");
 main.classList.add("content")
-
 
 // Header main content
 const contentHeader = document.createElement("div");
@@ -21,12 +18,8 @@ mainAddTaskSpan.textContent = "+";
 MainAddTask.appendChild(mainAddTaskText)
 MainAddTask.appendChild(mainAddTaskSpan)
 
-
 contentHeader.appendChild(MainAddTask)
 main.appendChild(contentHeader)
-
-//main.appendChild(card);
-
 
 // Body main content => CONTAINER CARDS
 
@@ -34,7 +27,6 @@ const containerCards = document.createElement("div");
 containerCards.classList.add("container-card");
 
 main.appendChild(containerCards)
-
 
 function setBgFolder(color){
     const root = document.documentElement;

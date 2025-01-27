@@ -2,7 +2,6 @@ import "../styles/header.css";
 
 const header = document.createElement("header");
 
-
 const nav = document.createElement("nav");
 const navList = document.createElement("ul");
 navList.classList.add("header-container-projects")
@@ -18,11 +17,9 @@ navItem2.classList.add("nav-item")
 navItem2.textContent = "Estudiar"
 
 nav.appendChild(navList);
-
 navList.appendChild(navItem)
 navList.appendChild(navItem1)
 navList.appendChild(navItem2)
-
-
 header.appendChild(nav)
+
 export default header;

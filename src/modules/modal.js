@@ -1,19 +1,17 @@
 import "../styles/modal.css";
 
 const modal = document.createElement("dialog");
-
 modal.classList.add("modal");
 
+// modal base
 const form = document.createElement("form");
-
 const btncloseModal = document.createElement("span");
 btncloseModal.textContent = "x"
 btncloseModal.classList.add("btn-close-modal");
-
 const titleModal = document.createElement("h2");
 
-const closeModal = () => document.querySelector(".modal").close()
 
+const closeModal = () => document.querySelector(".modal").close()
 const openModal = () => document.querySelector(".modal").showModal()
 
 
@@ -104,6 +102,7 @@ const componentsForm = function(){
 
     const btnSubmit = (id)=>{
         const btnSubmitTask = document.createElement("input");
+        btnSubmitTask.value = "Submit"
         btnSubmitTask.setAttribute("type","submit"); 
         btnSubmitTask.dataset.id = id;
         btnSubmitTask.id = "btn-submit-task"
@@ -127,6 +126,7 @@ function modalProject(){
         //title project
         const projectTitle = document.createElement("input");
         const btnSubmit = document.createElement("input");
+        btnSubmit.value = "Submit"
         btnSubmit.setAttribute("type","submit");
         btnSubmit.dataset.mode = "project";
         projectTitle.classList.add("input-project")
